@@ -13,9 +13,9 @@ api = 'https://maps.googleapis.com/maps/api/geocode/json?'
 apikeys = json.loads(open('../RandomCountrySelector/authentication.json').read())
 key = apikeys["GoogleGeocoderKEY"]
 
-# cities_list.csv is in the same directory
+# locationlist.csv is in the same directory
 # If you want to add cities to be added to the analysis, add them into the file with its country
-listcities = open('cities_list.csv', 'r')
+listcities = open('locationlist.csv', 'r')
 lines = listcities.readlines()
 myFields = ['country', 'city', 'W', 'S', 'E', 'N', 'FileSize_bytes']
 
@@ -27,7 +27,7 @@ for line in lines:
     line = line.rstrip()
     x = line.split(",")
 
-    with open('citiesoutput.csv') as input:
+    with open('BBoutput.csv') as input:
         reader = csv.DictReader(input)
 
         for row in reader:
@@ -55,7 +55,7 @@ for line in lines:
         west = js["results"][0]["geometry"]["viewport"]["southwest"]["lng"]
 
         print "Adding", x[0]
-        with open('citiesoutput.csv', 'a') as output:
+        with open('BBoutput.csv', 'a') as output:
             writer = csv.DictWriter(output, fieldnames=myFields)
             writer.writerow({'country': x[1], 'city': x[0], 'W': west, 'S': south, 'E': east, 'N': north, 'FileSize_bytes': 0})
 
